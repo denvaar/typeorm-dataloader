@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "tsc --watch",
+    "dev": "nodemon dist/index.js",
+    "tsc-watch": "tsc --watch",
     "build": "tsc -p .",
     "lint": "eslint ./src/**/*.ts"
   },
@@ -11,16 +12,19 @@
   "author": "denvaar",
   "license": "MIT",
   "devDependencies": {
+    "@types/graphql": "^14.5.0",
     "@types/node": "^13.7.4",
     "@typescript-eslint/eslint-plugin": "^2.20.0",
     "@typescript-eslint/parser": "^2.20.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
+    "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "typescript": "^3.8.2"
   },
   "dependencies": {
+    "apollo-server": "^2.10.1",
     "graphql": "^14.6.0",
     "graphql-tools": "^4.0.7"
   }

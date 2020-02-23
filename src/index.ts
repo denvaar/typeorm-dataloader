@@ -1,30 +1,45 @@
-import { makeExecutableSchema } from 'graphql-tools';
-import { graphql } from 'graphql';
+import { ApolloServer, gql } from 'apollo-server';
 
-const typeDefs = `
-schema {
-  query: Query
-}
-type Query {
-  hello: String!
-  name: String!
-}
+import books from './bookData';
+
+const typeDefs = gql`
+  schema {
+    query: Query
+  }
+
+  type Query {
+    books: [Book]
+  }
+
+  type Book {
+    title: String!
+    numberOfPages: Int!
+    author: Author
+  }
+
+  type Author {
+    firstName: String!
+    lastName: String!
+  }
 `;
 
 const resolvers = {
   Query: {
-    hello: () => 'world',
-    name: () => 'denvaar',
+    books: (): Array<Book> => books,
+  },
+  Book: {
+    author: (book: Book): Author => book.author,
   },
 };
 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
-
 /* main */
 (async () => {
-  const query: string | null = process.argv[2];
+  const apolloServer = new ApolloServer({
+    typeDefs,
+    resolvers,
+  });
 
-  const result = await graphql(schema, query);
-
-  console.log(JSON.stringify(result, null, 2));
+  apolloServer
+    .listen()
+    .then(({ url }) => console.log(`Apollo server listening at ${url}`));
 })();
