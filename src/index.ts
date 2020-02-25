@@ -1,39 +1,13 @@
-import { ApolloServer, gql } from 'apollo-server';
+import { ApolloServer } from 'apollo-server';
+import { createConnection } from 'typeorm';
 
-import books from './bookData';
-
-const typeDefs = gql`
-  schema {
-    query: Query
-  }
-
-  type Query {
-    books: [Book]
-  }
-
-  type Book {
-    title: String!
-    numberOfPages: Int!
-    author: Author
-  }
-
-  type Author {
-    firstName: String!
-    lastName: String!
-  }
-`;
-
-const resolvers = {
-  Query: {
-    books: (): Array<Book> => books,
-  },
-  Book: {
-    author: (book: Book): Author => book.author,
-  },
-};
+import resolvers from './graphqlSchema/resolvers';
+import typeDefs from './graphqlSchema/typeDefs';
 
 /* main */
 (async () => {
+  await createConnection();
+
   const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,

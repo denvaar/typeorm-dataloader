@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "nodemon dist/index.js",
+    "dev": "ts-node-dev src/index.ts",
     "tsc-watch": "tsc --watch",
     "build": "tsc -p .",
-    "lint": "eslint ./src/**/*.ts"
+    "start": "ts-node dist/index.js",
+    "lint": "eslint src/**/*.ts",
+    "typeorm": "ts-node node_modules/typeorm/cli.js",
+    "initdb": "ts-node src/initdb.ts && npm run typeorm migration:run"
   },
   "keywords": [],
   "author": "denvaar",
@@ -21,11 +24,16 @@
     "eslint-plugin-prettier": "^3.1.2",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
+    "ts-node": "^8.6.2",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.8.2"
   },
   "dependencies": {
     "apollo-server": "^2.10.1",
     "graphql": "^14.6.0",
-    "graphql-tools": "^4.0.7"
+    "graphql-tools": "^4.0.7",
+    "pg": "^7.18.2",
+    "typeorm": "^0.2.22"
   }
 }
