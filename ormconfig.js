@@ -6,7 +6,7 @@ module.exports = {
   database: process.env.DATABASE_NAME,
   password: process.env.DATABASE_PASSWORD,
   synchronize: false,
-  logging: false,
+  logging: true,
   migrationsRun: process.env.NODE_ENV === 'production',
   entities: ['src/entities/**/*.ts'],
   migrations: ['src/migrations/**/*.ts'],
