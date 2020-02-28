@@ -13,7 +13,7 @@ export default gql`
   type Book {
     title: String!
     numberOfPages: Int!
-    author: Author
+    author: Author!
   }
 
   type Author {

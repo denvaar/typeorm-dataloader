@@ -1,17 +1,23 @@
-import { getBooks, getAuthors, getBooksByAuthorId } from '../dbQueries';
+import { getBooks, getAuthors, getAuthor } from '../dbQueries';
 
 import { Author, Book } from '../entities';
 
 export default {
   Query: {
-    books: async (): Promise<Array<Book>> => await getBooks(),
     authors: async (): Promise<Array<Author>> => await getAuthors(),
-  },
-  Book: {
-    author: (book: Book): Author => book.author,
+    books: async (): Promise<Array<Book>> => await getBooks(),
   },
   Author: {
-    books: async (author: Author): Promise<Array<Book>> =>
-      await getBooksByAuthorId(author.id),
+    books: async (author: Author, args: any, ctx: any): Promise<Array<Book>> =>
+      await ctx.bookLoader.load(author.id),
+  },
+
+  Book: {
+    author: async (
+      book: Book,
+      args: any,
+      ctx: any,
+    ): Promise<Author | undefined> =>
+      await ctx.authorLoader.load(book.authorId),
   },
 };

@@ -28,4 +28,7 @@ export class Book {
   )
   @JoinColumn({ name: 'author_id' })
   author: Author;
+
+  @Column({ nullable: false, name: 'author_id' })
+  authorId: number;
 }

@@ -1,4 +1,5 @@
 import { getConnection } from 'typeorm';
+import DataLoader from 'dataloader';
 
 import { Author, Book } from './entities';
 
@@ -16,12 +17,13 @@ export const getAuthors = async (): Promise<Array<Author>> => {
     .getMany();
 };
 
-export const getBooksByAuthorId = async (
-  authorId: number,
-): Promise<Array<Book>> => {
-  /* N+1 problem */
-  return await getConnection()
-    .createQueryBuilder(Book, 'book')
-    .where('book.author_id = :authorId', { authorId })
-    .getMany();
+export const getAuthor = async (
+  id: number | undefined,
+): Promise<Author | undefined> => {
+  const author = await getConnection()
+    .createQueryBuilder(Author, 'author')
+    .where('author.id = :id', { id })
+    .getOne();
+
+  return author;
 };
